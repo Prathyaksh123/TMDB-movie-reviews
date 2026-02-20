@@ -4,6 +4,8 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import SearchResults from './pages/SearchResults';
 import MovieDetails from './pages/MovieDetails';
+import Celebs from './pages/Celebs';
+import PersonDetails from './pages/PersonDetails';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="/celebs" element={<Celebs />} />
+            <Route path="/person/:id" element={<PersonDetails />} />
           </Routes>
         </main>
 
@@ -25,7 +29,7 @@ function App() {
           marginTop: '100px',
           color: 'var(--text-muted)'
         }}>
-          <div style={{ marginBottom: '20px', color: 'var(--primary)', fontWeight: 'bold' }}>IMDb CLONE</div>
+          <div style={{ marginBottom: '20px', color: 'var(--primary)', fontWeight: 'bold' }}>TMDB clone</div>
           <p>© 2024 Built with React & TMDB API</p>
           <p style={{ marginTop: '10px', fontSize: '0.8rem' }}>A premium cinematic experience.</p>
         </footer>

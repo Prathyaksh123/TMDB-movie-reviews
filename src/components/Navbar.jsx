@@ -32,13 +32,13 @@ const Navbar = () => {
                     fontWeight: '900',
                     letterSpacing: '-1px'
                 }}>
-                    IMDb<span style={{ color: '#fff', fontSize: '1rem', fontWeight: '400', marginLeft: '5px' }}>CLONE</span>
+                    TMDB<span style={{ color: '#fff', fontSize: '1rem', fontWeight: '400', marginLeft: '5px' }}>clone</span>
                 </Link>
 
                 <div style={{ display: 'flex', gap: '25px', alignItems: 'center', color: 'var(--text-muted)', fontWeight: '500' }}>
                     <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>Movies</Link>
                     <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>TV Shows</Link>
-                    <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>Celebs</Link>
+                    <Link to="/celebs" style={{ color: 'inherit', textDecoration: 'none' }}>Celebs</Link>
                 </div>
             </div>
 
@@ -46,7 +46,7 @@ const Navbar = () => {
                 <form onSubmit={handleSearch} style={{ position: 'relative', width: '100%' }}>
                     <input
                         type="text"
-                        placeholder="Search IMDb"
+                        placeholder="Search TMDB clone"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         style={{

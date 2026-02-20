@@ -147,4 +147,23 @@ export const getImageUrl = (path, size = 'original') => {
     return `https://image.tmdb.org/t/p/${size}${path}`;
 };
 
+export const getPopularPeople = async () => {
+    const response = await tmdb.get('/person/popular');
+    return response.data.results;
+};
+
+export const searchPeople = async (query) => {
+    const response = await tmdb.get('/search/person', {
+        params: { query },
+    });
+    return response.data.results;
+};
+
+export const getPersonDetails = async (id) => {
+    const response = await tmdb.get(`/person/${id}`, {
+        params: { append_to_response: 'movie_credits,tv_credits' },
+    });
+    return response.data;
+};
+
 export default tmdb;

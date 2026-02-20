@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getMovieDetails, getImageUrl } from '../services/tmdb';
-import { Star, Clock, Calendar, Play, ArrowLeft, Users } from 'lucide-react';
+import { Star, Clock, Calendar, Play, ArrowLeft, Users, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import MovieCard from '../components/MovieCard';
 
@@ -10,6 +10,7 @@ const MovieDetails = () => {
     const navigate = useNavigate();
     const [movie, setMovie] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showTrailer, setShowTrailer] = useState(false);
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -34,6 +35,8 @@ const MovieDetails = () => {
     );
 
     if (!movie) return <div style={{ padding: '100px', textAlign: 'center' }}>Movie not found.</div>;
+
+    const trailerVideo = movie.videos?.results?.find(vid => vid.type === 'Trailer' && vid.site === 'YouTube') || movie.videos?.results?.find(vid => vid.site === 'YouTube');
 
     return (
         <div style={{ minHeight: '100vh', background: 'var(--bg-dark)' }}>
@@ -140,9 +143,15 @@ const MovieDetails = () => {
                     </p>
 
                     <div style={{ display: 'flex', gap: '20px' }}>
-                        <button className="btn-primary" style={{ padding: '15px 40px', fontSize: '1.1rem' }}>
-                            <Play fill="#000" size={20} /> Watch Trailer
-                        </button>
+                        {trailerVideo && (
+                            <button
+                                className="btn-primary"
+                                style={{ padding: '15px 40px', fontSize: '1.1rem' }}
+                                onClick={() => setShowTrailer(true)}
+                            >
+                                <Play fill="#000" size={20} /> Watch Trailer
+                            </button>
+                        )}
                         <button className="glass-morphism" style={{
                             padding: '15px 40px',
                             color: '#fff',
@@ -188,6 +197,54 @@ const MovieDetails = () => {
                         {movie.recommendations.results.slice(0, 6).map(m => (
                             <MovieCard key={m.id} movie={m} />
                         ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Trailer Modal */}
+            {showTrailer && trailerVideo && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100vh',
+                    background: 'rgba(0,0,0,0.9)',
+                    zIndex: 2000,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <button
+                        onClick={() => setShowTrailer(false)}
+                        style={{
+                            position: 'absolute',
+                            top: '40px',
+                            right: '50px',
+                            background: 'transparent',
+                            border: 'none',
+                            color: '#fff',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px',
+                            fontSize: '1.2rem'
+                        }}
+                    >
+                        <X size={30} /> Close
+                    </button>
+                    <div style={{ width: '80%', maxWidth: '1000px', aspectRatio: '16/9' }}>
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            src={`https://www.youtube.com/embed/${trailerVideo.key}?autoplay=1`}
+                            title="Trailer"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            style={{ borderRadius: '12px', border: '1px solid var(--glass-border)', boxShadow: '0 20px 40px rgba(0,0,0,0.8)' }}
+                        ></iframe>
                     </div>
                 </div>
             )}

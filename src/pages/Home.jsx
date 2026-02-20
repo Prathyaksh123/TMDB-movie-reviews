@@ -81,7 +81,7 @@ const Home = () => {
 
     if (loading) return (
         <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-dark)' }}>
-            <h2 style={{ color: 'var(--primary)', letterSpacing: '2px' }}>LOADING IMDB...</h2>
+            <h2 style={{ color: 'var(--primary)', letterSpacing: '2px' }}>LOADING TMDB clone...</h2>
         </div>
     );
 
